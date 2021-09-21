@@ -18,51 +18,51 @@ The assumption for this section is that you are familiar with how to install Ubu
 
 The following steps show how to setup the master server for this task:
  Log into the VM
-Use ```Cd ~``` to navigate into the home directory
-Use the “mkpasswd” command to make a hashed and salted password
-Use the “ssh-keygen” utility to generate a public RSA ssh key
-Use ```mkdir cloud-config``` to make a ```cloud-config``` directory
-Use ```Cd cloud-config``` to cd into the ```cloud-config``` directory you just made
-Use ```nano user-data``` to create and open a file called ```user-data``` for editing.
+1. Use ```Cd ~``` to navigate into the home directory
+2. Use the “mkpasswd” command to make a hashed and salted password
+3. Use the “ssh-keygen” utility to generate a public RSA ssh key
+4. Use ```mkdir cloud-config``` to make a ```cloud-config``` directory
+5. Use ```Cd cloud-config``` to cd into the ```cloud-config``` directory you just made
+6. Use ```nano user-data``` to create and open a file called ```user-data``` for editing.
 
-Enter the following into the file:
+- Enter the following into the file:
 
-```
-#cloud-config
-autoinstall:
-  version: 1
-  early-commands:
-    - systemctl stop ssh # otherwise packer tries to connect and exceed max attempts
-  network:
+  ```
+  #cloud-config
+  autoinstall:
+    version: 1
+    early-commands:
+      - systemctl stop ssh # otherwise packer tries to connect and exceed max attempts
     network:
-      version: 2
-      ethernets:
-        eth0:
-          dhcp4: yes
-          dhcp-identifier: mac
-  apt:
-    preserve_sources_list: false
-    primary:
-      - arches: [amd64]
-        uri: "http://archive.ubuntu.com/ubuntu/"
-  ssh:
-    install-server: yes
-    authorized-keys:
-      - ssh-rsa your_public_key
-    allow-pw: no
-  identity:
-    hostname: ubuntu-01
-    password: "your hashed passwd" # root
-    username: your_username # root doesn't work
-  packages:
-    - open-vm-tools
-  user-data:
-    disable_root: false 
-  late-commands:
-    - echo 'ubuntu ALL=(ALL) NOPASSWD:ALL' > /target/etc/sudoers.d/ubuntu
-    - sed -ie 's/GRUB_CMDLINE_LINUX=.*/GRUB_CMDLINE_LINUX="net.ifnames=0 ipv6.disable=1 biosdevname=0"/' /target/etc/default/grub
-    - curtin in-target --target /target update-grub2
-```
+      network:
+        version: 2
+        ethernets:
+          eth0:
+            dhcp4: yes
+            dhcp-identifier: mac
+    apt:
+      preserve_sources_list: false
+      primary:
+        - arches: [amd64]
+          uri: "http://archive.ubuntu.com/ubuntu/"
+    ssh:
+      install-server: yes
+      authorized-keys:
+        - ssh-rsa your_public_key
+      allow-pw: no
+    identity:
+      hostname: ubuntu-01
+      password: "your hashed passwd" # root
+      username: your_username # root doesn't work
+    packages:
+      - open-vm-tools
+    user-data:
+      disable_root: false 
+    late-commands:
+      - echo 'ubuntu ALL=(ALL) NOPASSWD:ALL' > /target/etc/sudoers.d/ubuntu
+      - sed -ie 's/GRUB_CMDLINE_LINUX=.*/GRUB_CMDLINE_LINUX="net.ifnames=0 ipv6.disable=1 biosdevname=0"/' /target/etc/default/grub
+      - curtin in-target --target /target update-grub2
+  ```
 
 
 
