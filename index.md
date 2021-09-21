@@ -18,11 +18,11 @@ The assumption for this section is that you are familiar with how to install Ubu
 
 The following steps show how to setup the master server for this task:
  Log into the VM
-1. Use ```Cd ~``` to navigate into the home directory
-2. Use the “mkpasswd” command to make a hashed and salted password
-3. Use the “ssh-keygen” utility to generate a public RSA ssh key
-4. Use ```mkdir cloud-config``` to make a ```cloud-config``` directory
-5. Use ```Cd cloud-config``` to cd into the ```cloud-config``` directory you just made
+1. Use ```cd ~``` to navigate into the home directory.
+2. Use the ```mkpasswd``` utility to make a hashed and salted password.
+3. Use the ```ssh-keygen``` utility to generate a public RSA ssh key.
+4. Use ```mkdir cloud-config``` to make a ```cloud-config``` directory.
+5. Use ```cd cloud-config``` to cd into the ```cloud-config``` directory you just made.
 6. Use ```nano user-data``` to create and open a file called ```user-data``` for editing.
 
 - Enter the following into the file:
