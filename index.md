@@ -9,8 +9,8 @@ According to the official Ubuntu Documentation website, cloud-init is an Ubuntu 
 ## Operating Systems and Tools Used
 
 The following were used in this task:
-Ubuntu Server 20.04.3 LTS
-VMware Workstation 16 Pro
+- Ubuntu Server 20.04.3 LTS
+- VMware Workstation 16 Pro
 
 ## Master Server Setup
 
