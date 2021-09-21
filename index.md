@@ -48,12 +48,12 @@ autoinstall:
   ssh:
     install-server: yes
     authorized-keys:
-      - ssh-rsa <your_public_key>
+      - ssh-rsa your_public_key
     allow-pw: no
   identity:
     hostname: ubuntu-01
-    password: “your hashed passwd” # root
-    username: cnit481_g6 # root doesn't work
+    password: "your hashed passwd" # root
+    username: your_username # root doesn't work
   packages:
     - open-vm-tools
   user-data:
