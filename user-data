@@ -1,0 +1,34 @@
+#cloud-config
+autoinstall:
+  version: 1
+  early-commands:
+    - systemctl stop ssh # otherwise packer tries to connect and exceed max attempts
+  network:
+    network:
+      version: 2
+      ethernets:
+        eth0:
+          dhcp4: yes
+          dhcp-identifier: mac
+  apt:
+    preserve_sources_list: false
+    primary:
+      - arches: [amd64]
+        uri: "http://archive.ubuntu.com/ubuntu/"
+  ssh:
+    install-server: yes
+    authorized-keys:
+      - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDNITpTBqqQ2ngKaMvS4s2nvAUrc+EmY2Jx+j6pOZdVRhiNwLDz/Rp//IyPrACPPfMfANp2eODyYTo5bo9cSb91VK2euzSOvA+EtyYNduW0SoVYsj0bIksmWXrnHp44Y+alT3EazSmOpeGihU84g3lnw1vor+WnbBx3l+VGVW+9FI5ihUMVABlCym2d9zV7tcmtUFcMfGLE1qRX9U/tdfgMhdWB6Xtj4odamCw7CIdj2F9Tp1r+dEeDLElj8Ltu/wV7xzrONY6rPnjW42NCkL7UfE+uP9GQmkg35AHgAX84KC667G5xdb+D3MVsPUzbkJ02hH1K/6gmjlqBH+OPduMFbH/+ifhi6j92rB0tVPcuU4/SUqzKkCZj4GqQlvfMQKwUMcj44aa64x4U8FVoqaK7snEEDwaeVG/vzAkxMrYeyrBL4bRE82fG2T8fK5GIYFhZF/3/DwzNbnL3tvoFlVg7e0Km0NqdCoWHXWAoLDoi7Ndck6fd1JASVOdIBVNtcvavUfz4qWZZJJuUW1c2rZTK73RsIZgLQIt9ljagOomrOxfX4lgihURwIq/xrjepMFcVH74YH3suK3vFvMnF6a7ecZQ8GLGLkCUSkZhQF9vGPDnw0Xm+7041A8rLy6qMMpMIGHQ2J+dWKTRSQ0e6/dqjhcB8W9wmzeDWzbYMBVDSqw== smercha@purdue.edu
+    allow-pw: no
+  identity:
+    hostname: ubuntu-01
+    password: "$6$jMx.6tAO$fxRJLgWkdl8mPNKpn6yprNkQ805V3RwCygpBOsNo9CN9wuhcRXEBtPx3/RmtW6371JNkY.GW041a0uSeE0uZ/1" # root
+    username: cnit481_g6 # root doesn't work
+  packages:
+    - open-vm-tools
+  user-data:
+    disable_root: false 
+  late-commands:
+    - echo 'ubuntu ALL=(ALL) NOPASSWD:ALL' > /target/etc/sudoers.d/ubuntu
+    - sed -ie 's/GRUB_CMDLINE_LINUX=.*/GRUB_CMDLINE_LINUX="net.ifnames=0 ipv6.disable=1 biosdevname=0"/' /target/etc/default/grub
+    - curtin in-target --target /target update-grub2
