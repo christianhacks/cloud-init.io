@@ -27,6 +27,7 @@ Use ```nano user-data``` to create and open a file called ```user-data``` for ed
 
 Enter the following into the file:
 
+```
 #cloud-config
 autoinstall:
   version: 1
@@ -61,7 +62,7 @@ autoinstall:
     - echo 'ubuntu ALL=(ALL) NOPASSWD:ALL' > /target/etc/sudoers.d/ubuntu
     - sed -ie 's/GRUB_CMDLINE_LINUX=.*/GRUB_CMDLINE_LINUX="net.ifnames=0 ipv6.disable=1 biosdevname=0"/' /target/etc/default/grub
     - curtin in-target --target /target update-grub2
-
+```
 
 
 
