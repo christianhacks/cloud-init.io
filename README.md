@@ -1,2 +1,2 @@
 # cloud-init.io
-Remote Ubuntu Server install using cloud-init autoinstall
+Remote Ubuntu Server install using NoCloud cloud-init autoinstall
